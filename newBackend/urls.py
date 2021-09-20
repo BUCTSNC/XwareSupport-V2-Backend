@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from newBackend.adminInit import init
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
@@ -23,3 +24,5 @@ urlpatterns = [
     path('wxapi/', include(wxapi.urls)),
     path('manageAPI/',include(manageAPI.urls)),
 ]
+
+init()
