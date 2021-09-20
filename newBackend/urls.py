@@ -17,7 +17,9 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 import wxapi.urls
+import manageAPI.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('wxapi/', include(wxapi.urls))
+    path('wxapi/', include(wxapi.urls)),
+    path('manageAPI/',include(manageAPI.urls)),
 ]
