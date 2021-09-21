@@ -98,7 +98,7 @@ class Appointment(APIView):
             return myResponse.AuthError("您无权操作该预约")
         thisAppointment.status = 0
         thisAppointment.save()
-        return myResponse.OK(data=appointmentDetailSerializers("预约已取消"))
+        return myResponse.OK(msg="预约已取消")
 
 class myAppointmentList(APIView):
     @loginCheck
