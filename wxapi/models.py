@@ -21,7 +21,9 @@ class Appointment(models.Model):
     slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
     problemType = models.CharField(max_length=200, default="")
     describe = models.TextField()
-    applyTime = models.DateTimeField(auto_now_add=True, null=True)
+    #applyTime = models.DateTimeField(auto_now_add=True, null=True)
+    applyTime = models.CharField(max_length=50)
+    submitTime = models.DateTimeField(auto_now_add=True,null=True)
     status = models.IntegerField(default=1)
     """
     0:预约失败

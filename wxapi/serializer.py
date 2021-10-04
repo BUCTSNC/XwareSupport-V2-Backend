@@ -68,6 +68,7 @@ class appointmentDetailSerializers(ModelSerializer):
         model = Appointment
         fields = ['id','problemType','status','timeSlot','uuid',"sourcesInfo",'timeSlot','describe','applyTime']
     timeSlot = serializers.SerializerMethodField()
+    #bug
     def get_timeSlot(self,data):
         slot = data.slot
         return slot.Date.strftime("%Y-%m-%d") + " " + "({})".format(numberToWeekDay(slot.Date.strftime("%w"))) +" "+\
