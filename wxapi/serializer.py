@@ -66,7 +66,7 @@ class appointmentSerializers(ModelSerializer):
 class appointmentDetailSerializers(ModelSerializer):
     class Meta:
         model = Appointment
-        fields = ['id','problemType','status','timeSlot','uuid',"sourcesInfo",'timeSlot','describe','applyTime']
+        fields = ['id','problemType','status','timeSlot','uuid',"sourcesInfo",'timeSlot','describe','applyTime','slot_id']
     timeSlot = serializers.SerializerMethodField()
     def get_timeSlot(self,data):
         slot = data.slot
