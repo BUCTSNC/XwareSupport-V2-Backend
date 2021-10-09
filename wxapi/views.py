@@ -107,6 +107,7 @@ class Appointment(APIView):
     def put(self,request):
         rawData = dict(request.data)
         try:
+            sourcesInfo = rawData['info']
             problemType = rawData['form']['problemType']
             problemDetail = rawData['form']['problemDetail']
         except:
@@ -125,6 +126,7 @@ class Appointment(APIView):
         thisAppointment.problemType = problemType
         thisAppointment.describe = problemDetail
         thisAppointment.slot = thisTimeslot
+        thisAppointment.sourcesInfo = sourcesInfo
         thisAppointment.save()
         return myResponse.OK(msg="修改成功",data={"AppointmentID":thisAppointment.id})
 
