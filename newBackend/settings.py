@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'xware',
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'root',
+        'PASSWORD': 'lyqkingsdom',
     }
 }
 
