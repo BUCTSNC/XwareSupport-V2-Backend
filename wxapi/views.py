@@ -1,8 +1,7 @@
-from requests.api import request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json,requests,time,datetime
-from wxapi import myResponse
+from newBackend import myResponse
 from wxapi.serializer import timeSlotSerializers,mainProblemSerializers,appointmentSerializers,appointmentDetailSerializers
 from wxapi import models
 import uuid
@@ -20,9 +19,6 @@ def loginCheck(func):
     return decorated
 
 class login(APIView):
-    def get(self,request):
-        return Response({'code':200})
-
     def post(self,request):
         data = request.data
         if 'jscode' not in data:
@@ -102,6 +98,7 @@ class Appointment(APIView):
             return myResponse.AuthError("您无权操作该预约")
         thisAppointment.status = 0
         thisAppointment.save()
+
         return myResponse.OK(msg="预约已取消")
     @loginCheck
     def put(self,request):
