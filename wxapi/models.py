@@ -24,7 +24,7 @@ class Appointment(models.Model):
     applyTime = models.DateTimeField(auto_now_add=True, null=True)
     status = models.IntegerField(default=1)
     """
-    0:预约失败
+    0:预约取消
     1:预约成功
     2:签到成功
     3:正在维修
