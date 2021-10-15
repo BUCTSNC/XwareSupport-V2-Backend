@@ -103,6 +103,33 @@ class Appointment(APIView):
         thisAppointment.status = 0
         thisAppointment.save()
         return myResponse.OK(msg="预约已取消")
+    @loginCheck
+    def put(self,request):
+        rawData = dict(request.data)
+        try:
+            sourcesInfo = rawData['info']
+            problemType = rawData['form']['problemType']
+            problemDetail = rawData['form']['problemDetail']
+        except:
+            return myResponse.Error("信息未填写成功")
+        try:
+            thisTimeslot = models.TimeSlot.objects.get(id = rawData['form']['timeSlotId'])
+        except:
+            return myResponse.Error("时间端获取失败")
+        try:
+            uuid = rawData['uuid']
+            thisAppointment = models.Appointment.objects.get(uuid = uuid)
+        except:
+            return myResponse.Error("无uuid或无此预约")
+        if thisAppointment.openID != request.session['openID']:
+            return myResponse.AuthError("您无权操作该预约")
+        thisAppointment.problemType = problemType
+        thisAppointment.describe = problemDetail
+        thisAppointment.slot = thisTimeslot
+        thisAppointment.sourcesInfo = sourcesInfo
+        thisAppointment.save()
+        return myResponse.OK(msg="修改成功",data={"AppointmentID":thisAppointment.id})
+
 
 class myAppointmentList(APIView):
     @loginCheck
