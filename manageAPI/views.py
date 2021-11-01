@@ -39,4 +39,16 @@ class signIn(APIView):
         uuid = data['uuid']
         return myResponse.OK()
         
-
+class scanCode(APIView):
+    @loginCheck
+    def put(self,request):
+        try:
+            uuid = request.query_params['uuid']
+            thisAppointment = models.Appointment.object.get(uuid=uuid)
+            if(thisAppointment.status == 1):
+                thisAppointment.status = 2
+            elif(thisAppointment.status >= 2):
+                return myResponse.Error("已签到")
+        except:
+            return myResponse.Error("无uuid或无此预约")
+        return myResponse.OK(msg="签到成功")
