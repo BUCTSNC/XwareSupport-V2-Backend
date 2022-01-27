@@ -8,7 +8,6 @@ class TimeSlot(models.Model):
     Start = models.DateTimeField(blank=False)
     End = models.DateTimeField(blank=True, null=True)
     AllowNumber = models.IntegerField(blank=False)
-
     def __str__(self):
         return str(self.id) + "-" + self.Date.strftime("%Y-%m-%d %w") + " " + str(
             self.Start.strftime("%H:%M:%S")) + "-" + (self.End).strftime("%H:%M:%S")
@@ -21,12 +20,10 @@ class Appointment(models.Model):
     slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
     problemType = models.CharField(max_length=200, default="")
     describe = models.TextField()
-    #applyTime = models.DateTimeField(auto_now_add=True, null=True)
-    applyTime = models.CharField(max_length=50)
-    submitTime = models.DateTimeField(auto_now_add=True,null=True)
+    applyTime = models.DateTimeField(auto_now_add=True, null=True)
     status = models.IntegerField(default=1)
     """
-    0:预约失败
+    0:预约取消
     1:预约成功
     2:签到成功
     3:正在维修

@@ -7,5 +7,4 @@ urlpatterns = [
     path("problemTypes",views.ProblemType.as_view()),
     path("Appointment",views.Appointment.as_view()),
     path("myAppointmentList",views.myAppointmentList.as_view())
-    # path("getPersonalInfoFromDB",views.getPersonalInfo.as_view())
 ]
