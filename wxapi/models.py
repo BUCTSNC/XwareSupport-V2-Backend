@@ -14,7 +14,7 @@ class TimeSlot(models.Model):
 
 
 class Appointment(models.Model):
-    uuid = models.CharField(max_length=100)
+    uuid = models.CharField(max_length=100,unique=True)
     openID = models.CharField(max_length=100)
     sourcesInfo = models.JSONField(null=True)
     slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
