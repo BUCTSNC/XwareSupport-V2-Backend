@@ -25,4 +25,4 @@ urlpatterns = [
     path('manageAPI/',include(manageAPI.urls)),
 ]
 
-init()
+#init()

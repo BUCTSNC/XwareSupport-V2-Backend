@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'newBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new_xware',
+        'NAME': 'xware2',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'USER': 'root',
