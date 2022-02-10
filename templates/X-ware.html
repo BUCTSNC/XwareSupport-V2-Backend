@@ -1,0 +1,232 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html>
+<head>
+<meta charset="utf-8">
+<title>X-ware处方</title>
+<style>
+.div0 {
+    width: 700px;
+    padding: 20px;
+}
+
+.div1 {
+    width: 350px;
+    height: 80px;
+    float: left;
+    margin-top: -10px;
+}
+
+.div2 {
+    width: 350px;
+    height: 80px;
+    float: right;
+}
+
+.div3 {
+    width:  700px;
+    height: 1070px;
+    border: 4px solid black;
+    float: left;
+    background-image: url('{% static "images/logo1.png" %}');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: 50%;
+}
+
+.div4 {
+    width: 300px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    float: left;
+}
+
+.div5 {
+    width: 396px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    float: left;
+}
+
+.div6 {
+    width: 348px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    float:left;
+}
+
+.div7 {
+    width: 530px;
+    height:200px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    float:left;
+}
+
+.div8 {
+    width:166px;
+    height:200px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    float:left;
+}
+
+.div9 {
+    width:698px;
+    height:300px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    float:left;
+}
+
+.div10 {
+    width:698px;
+    height:120px;
+    border: 2px solid black;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    float:left;
+}
+
+.p1 {
+    padding-left: 8px;
+    font-size: 25px;
+    font-weight:500;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.p2{
+    padding-left: 35px;
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.p3{
+    padding-left: 400px;
+    padding-bottom :5px;
+    padding-top:1150px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.p4{
+    padding-left:70px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+/* From cssbuttons.io by @magbanum */
+/* Customize the label (the container) */
+.container {
+ display: block;
+ position:relative;
+ cursor: pointer;
+ font-size: 22px;
+ user-select: none;
+ float:right;
+height:35px;
+right:20px;
+bottom:20px;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 30px;
+  left: -35px;
+  height: 25px;
+  width: 25px;
+  background-color: #ccc;
+  border: solid gray 1px;
+  border-radius: 4px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #666666;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 0.4rem;
+  top: 0.2rem;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+</style>
+</head>
+<body>
+    <div class="div0">
+      <div class="div1"><img src='{% static "images/logo3.png" %}' height="90"></div>
+      <div class="div2"><h1>X-ware服务处理报告单</h1></div>
+      <div class="div3">
+          <div class="div4"><p class="p1">品牌<span class="sp1">&nbsp;{{brand}}</span></p></div>
+          <div class="div5"><p class="p1">型号<span class="sp1">&nbsp;{{model}}</span></p></div>
+          <div class="div6"><p class="p1">姓名<span class="sp1">&nbsp;{{name}}</span></p></div>
+	   <div class="div6"> <p class="p1">学号<span class="sp1">&nbsp;{{stuNO}}</span></p> </div>
+          <div class="div6"> <p class="p1">联系方式<span class="sp1">&nbsp;{{phone}}</span></p> </div>
+	   <div class="div6"> <p class="p1">日期<span class="sp1">&nbsp;{{date}}</span></p> </div>
+	   <div class="div7"> <p class="p1">主诉<br/><span class="sp2">&nbsp;{{problem}}</span></p></div>
+	   <div class="div8"> <p class="p2">问题类型</p>
+
+           <label class="container" for="hardwares">
+           {% if b1 == '1' %}<input type="checkbox" id="hardwares" checked="checked"><br/>
+           {% else %}<input type="checkbox" id="hardwares"><br/> {% endif %}
+           <span class="checkmark"></span> 硬件问题 </label>
+
+           <label class="container" for="softwares">
+           {% if b2 == '1' %}<input type="checkbox" id="softwares" checked="checked"><br/>
+           {% else %}<input type="checkbox" id="softwares"><br/>{% endif %}
+           <span class="checkmark"></span> 软件问题</label>
+
+           <label class="container" for="networks">
+           {% if b3 == '1' %}<input type="checkbox" id="networks" checked="checked"><br/>
+           {% else %}<input type="checkbox" id="networks" ><br/>{% endif %}
+           <span class="checkmark"></span> 网络问题 </label>
+
+           <label class="container" for="others">
+           {% if b4 == '1' %}<input type="checkbox" id="others" checked="checked"><br/>
+           {% else %}<input type="checkbox" id="others"><br/>{% endif %}
+           <span class="checkmark"></span> 其他问题 </label>
+       </div>
+	   <div class="div9"> <p class="p1">检测与推断<br/><span class="sp2">&nbsp;{{inspection}}</span></p> </div>
+	   <div class="div9"> <p class="p1">处理过程与方法<br/><span class="sp2">&nbsp;{{processAndWays}}</span></p> </div>
+	   <div class="div10"> <p class="p1">最终效果<br/><span class="sp2">&nbsp;{{finalEffect}}</span></p> </div>
+      </div>
+      <p class="p3">处理人：&nbsp;{{companions}}</p>
+      <p class="p4">本诊断单一式一份，由学生网络中心留档保存，供日后分析查阅</p>
+    </div>
+</body>
+</html>
