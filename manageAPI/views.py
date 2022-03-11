@@ -7,6 +7,7 @@ import bcrypt,hashlib
 import os,base64
 import pdfcrowd
 from django.http import HttpResponse
+import time
 
 # Create your views here.
 def loginCheck(func):
@@ -18,7 +19,7 @@ def loginCheck(func):
             return func(self, *args, **kwargs)
     return decorated
 
-#register权限 auth: 1 普通用户 2 社团其它部门成员 3 系维成员 4 管理员 5 root
+#register权限 auth: 1 普通用户  2 系维成员 3 值班人员  4 待定 5 root           #2 社团其它部门成员 3 系维成员 4 管理员 5 root
 #权限初始化为1 暂时直接由数据库改权限
 class register(APIView):
     def post(self,request):
@@ -49,14 +50,14 @@ class login(APIView):
         account = models.User.objects.filter(username = username)
         if account.count() == 0:
             return myResponse.Error("无此账户或密码错误")
-        account = account[0]
-        hash = bcrypt.hashpw(password=password.encode("utf8"),salt=bytes.fromhex(account.salt))
+        thisAccount = account[0]
+        hash = bcrypt.hashpw(password=password.encode("utf8"),salt=bytes.fromhex(thisAccount.salt))
         hash_hex = hash.hex()
         #if hash.hex() != account.passwordHashWithSalt:
-        if hash_hex[0:58] != account.salt:
+        if hash_hex[0:58] != thisAccount.salt:
             return myResponse.Error("无此账户或密码错误")
-        request.session['user'] = account.id
-        return myResponse.OK("登录成功")
+        request.session['user'] = thisAccount.id
+        return myResponse.OK(msg="登录成功",data=thisAccount.auth)
 
 class signIn(APIView):
     @loginCheck
@@ -69,7 +70,7 @@ class signIn(APIView):
         return myResponse.OK()
 
 class scanCode(APIView):
-    #@loginCheck
+    @loginCheck
     def put(self,request):
         try:
             data = request.data
@@ -144,14 +145,31 @@ class myAppointment(APIView):
             for i in range(len(thisevent)):
                 appointment_uuid = thisevent[i].appointment_uuid_id
                 appointment_client = md.Appointment.objects.filter(uuid = appointment_uuid)  #在appointment中查找appointment记录
+                # 变形时间
+                slot = md.TimeSlot.objects.get(id=appointment_client[0].slot_id)
+                applyTime = slot.Date.strftime("%Y-%m-%d") + " " + "({})".format(numberToWeekDay(slot.Date.strftime("%w"))) +" "+\
+                            str(time.strftime("%H:%M:%S",time.localtime(slot.Start.timestamp()))) + "-" + \
+                            str(time.strftime("%H:%M:%S",time.localtime(slot.End.timestamp())))
+                #
                 appointments.append(dict(dealStatus=thisevent[i].status,id=appointment_client[0].id,sourcesInfo=appointment_client[0].sourcesInfo,\
-                                         problemType=appointment_client[0].problemType,applyTime=appointment_client[0].applyTime,username=manageName,\
+                                         problemType=appointment_client[0].problemType,applyTime=applyTime,username=manageName,\
                                          uuid=appointment_uuid))
                 #print(appointment_client[0].sourcesInfo[0])
             return myResponse.OK(msg="数据获取成功",data=dict(username=manageName,appointments=appointments))
         except Exception as e:
             print("%s"%e)
         return myResponse.Error(msg="数据获取失败")
+def numberToWeekDay(num):
+    dic = {
+        "1": "星期一",
+        "2": "星期二",
+        "3": "星期三",
+        "4": "星期四",
+        "5": "星期五",
+        "6": "星期六",
+        "0": "星期日",
+    }
+    return dic[num]
 
 class submitTicket(APIView):
     def get(self,request):

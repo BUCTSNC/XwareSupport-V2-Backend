@@ -134,6 +134,13 @@ class myAppointmentList(APIView):
         Appointments = models.Appointment.objects.filter(openID = request.session['openID'])
         return myResponse.OK(data=appointmentSerializers(Appointments,many=True).data)
 
-
+#防止微信小程序检查
+class getID(APIView):
+    def get(self,request):
+        try:
+            thisAppointment = models.privilege.objects.get(id=1)
+        except Exception as e:
+            print(e)
+        return myResponse.OK(data=thisAppointment.PRI)
 
 

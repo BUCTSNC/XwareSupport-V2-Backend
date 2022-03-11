@@ -46,3 +46,6 @@ class subProblemType(models.Model):
     mainType = models.ForeignKey(mainProblemType, on_delete=models.CASCADE)
     def __str__(self):
         return self.mainType.type + "-" + self.type
+
+class privilege(models.Model):
+    PRI = models.IntegerField(default=0)
